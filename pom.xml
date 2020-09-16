@@ -8,7 +8,7 @@
 
     <artifactId>ultracommerce-authorizenet</artifactId>
     <name>UltraCommerce Authorize.net</name>
-    <description>BroadleafCommerce Authorize.net</description>
+    <description>UltraCommerce Authorize.net</description>
     <version>3.0.2-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,13 +53,7 @@
         </repository>
     </distributionManagement>
     <dependencies>
-        <dependency>
-            <groupId>com.ultracommerce</groupId>
-            <artifactId>ultracommerce-third-party-integration-config</artifactId>
-            <version>default</version>
-            <optional>true</optional>
-            <scope>compile</scope>
-        </dependency>
+        
         <dependency>
             <groupId>com.ultracommerce</groupId>
             <artifactId>ultracommerce-common</artifactId>
