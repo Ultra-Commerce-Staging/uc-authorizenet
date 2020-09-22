@@ -1,33 +1,33 @@
 /*
  * #%L
- * BroadleafCommerce Authorize.net
+ * UltraCommerce Authorize.net
  * %%
- * Copyright (C) 2009 - 2015 Broadleaf Commerce
+ * Copyright (C) 2009 - 2015 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.vendor.authorizenet.service.payment.type;
+package com.ultracommerce.vendor.authorizenet.service.payment.type;
 
 import net.authorize.data.creditcard.CardType;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
-import org.broadleafcommerce.common.payment.CreditCardType;
+import com.ultracommerce.common.UltraEnumerationType;
+import com.ultracommerce.common.payment.CreditCardType;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 
-public class AuthorizeNetCardType implements Serializable, BroadleafEnumerationType {
+public class AuthorizeNetCardType implements Serializable, UltraEnumerationType {
    
     private static final long serialVersionUID = 1L;
 
@@ -55,8 +55,8 @@ public class AuthorizeNetCardType implements Serializable, BroadleafEnumerationT
         return null;
     }
     
-    public static AuthorizeNetCardType getInstanceFromBroadleafType(final CreditCardType blcCardType) {
-        return getInstance(blcCardType.getType());
+    public static AuthorizeNetCardType getInstanceFromUltraType(final CreditCardType ucCardType) {
+        return getInstance(ucCardType.getType());
     }
 
     private String type;
@@ -85,9 +85,9 @@ public class AuthorizeNetCardType implements Serializable, BroadleafEnumerationT
         return authCardType;
     }
     
-    public CreditCardType getBroadleafCardType() {
-        CreditCardType blcCardType = CreditCardType.getInstance(type);
-        return blcCardType == null ? new CreditCardType(type, friendlyType) : blcCardType;
+    public CreditCardType getUltraCardType() {
+        CreditCardType ucCardType = CreditCardType.getInstance(type);
+        return ucCardType == null ? new CreditCardType(type, friendlyType) : ucCardType;
     }
 
     private void setType(final String type) {

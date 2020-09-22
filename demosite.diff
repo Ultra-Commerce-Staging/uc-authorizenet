@@ -1,5 +1,5 @@
 From 0fc0ab16d1c3b11156ff4717216d5667d005c464 Mon Sep 17 00:00:00 2001
-From: Joshua Skorton <jskorton@broadleafcommerce.com>
+From: Joshua Skorton <jskorton@ultracommerce.com>
 Date: Mon, 7 Oct 2013 17:19:02 -0500
 Subject: [PATCH] Authorize.net
 
@@ -24,7 +24,7 @@ index 1914d69..6d31f83 100644
      <properties>
          <blc.version>3.1.0-SNAPSHOT</blc.version>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-+        <broadleaf.anet.version>2.4.0-SNAPSHOT</broadleaf.anet.version>
++        <ultra.anet.version>2.4.0-SNAPSHOT</ultra.anet.version>
      </properties>
      <description>My Company's eCommerce Website</description>
      <repositories>
@@ -41,9 +41,9 @@ index 1914d69..6d31f83 100644
 +                <scope>compile</scope>
 +            </dependency>
 +            <dependency>
-+                <groupId>org.broadleafcommerce</groupId>
-+                <artifactId>broadleaf-authorizenet</artifactId>
-+                <version>${broadleaf.anet.version}</version>
++                <groupId>com.ultracommerce</groupId>
++                <artifactId>ultra-authorizenet</artifactId>
++                <version>${ultra.anet.version}</version>
 +                <type>jar</type>
 +                <scope>compile</scope>
 +            </dependency>
@@ -64,8 +64,8 @@ index 2c6866e..251b6f9 100644
 +            <artifactId>anet-java-sdk</artifactId>
 +        </dependency>
 +        <dependency>
-+            <groupId>org.broadleafcommerce</groupId>
-+            <artifactId>broadleaf-authorizenet</artifactId>
++            <groupId>com.ultracommerce</groupId>
++            <artifactId>ultra-authorizenet</artifactId>
 +        </dependency>
      </dependencies>
  </project>
@@ -93,11 +93,11 @@ index 0000000..8643221
 +
 +package com.mycompany.controller.checkout;
 +
-+import org.broadleafcommerce.core.pricing.service.exception.PricingException;
-+import org.broadleafcommerce.core.web.checkout.model.BillingInfoForm;
-+import org.broadleafcommerce.core.web.checkout.model.ShippingInfoForm;
-+import org.broadleafcommerce.vendor.authorizenet.web.controller.BroadleafAuthorizeNetController;
-+import org.broadleafcommerce.vendor.authorizenet.web.controller.BroadleafAuthorizeNetException;
++import com.ultracommerce.core.pricing.service.exception.PricingException;
++import com.ultracommerce.core.web.checkout.model.BillingInfoForm;
++import com.ultracommerce.core.web.checkout.model.ShippingInfoForm;
++import com.ultracommerce.vendor.authorizenet.web.controller.UltraAuthorizeNetController;
++import com.ultracommerce.vendor.authorizenet.web.controller.UltraAuthorizeNetException;
 +import org.springframework.stereotype.Controller;
 +import org.springframework.ui.Model;
 +import org.springframework.web.bind.annotation.ModelAttribute;
@@ -113,7 +113,7 @@ index 0000000..8643221
 +import javax.servlet.http.HttpServletResponse;
 +
 +@Controller
-+public class AuthorizeNetController extends BroadleafAuthorizeNetController {
++public class AuthorizeNetController extends UltraAuthorizeNetController {
 +
 +    //This is the URL that Authorize.net will call after receiving a Direct Post from a payment
 +    //This should match ${authorizenet.relay.response.url} in your properties file.
@@ -121,7 +121,7 @@ index 0000000..8643221
 +    public @ResponseBody
 +    String processAuthorizeNetAuthorizeAndDebit(HttpServletRequest request, HttpServletResponse response, Model model,
 +            @ModelAttribute("shippingInfoForm") ShippingInfoForm shippingForm,
-+            @ModelAttribute("billingInfoForm") BillingInfoForm billingForm) throws NoSuchAlgorithmException, UnsupportedEncodingException, PricingException, InvalidKeyException, BroadleafAuthorizeNetException {
++            @ModelAttribute("billingInfoForm") BillingInfoForm billingForm) throws NoSuchAlgorithmException, UnsupportedEncodingException, PricingException, InvalidKeyException, UltraAuthorizeNetException {
 +        return super.processAuthorizeNetAuthorizeAndDebit(request, response, model);
 +    }
 +    
@@ -134,9 +134,9 @@ index bc1dde9..a920cf6 100644
  
  # Please see common-shared.properties for more information on how the properties files work
  
--blPU.hibernate.hbm2ddl.auto=create-drop
+-ucPU.hibernate.hbm2ddl.auto=create-drop
 \ No newline at end of file
-+blPU.hibernate.hbm2ddl.auto=create-drop
++ucPU.hibernate.hbm2ddl.auto=create-drop
 +
 +authorizenet.api.login.id=4UDq5H4sg
 +authorizenet.transaction.key=6Pv4WeXF5n3M2t33
@@ -146,7 +146,7 @@ index bc1dde9..a920cf6 100644
 +authorizenet.jetty.integration.port=8081
 +authorizenet.server.url=https://test.authorize.net/gateway/transact.dll
 +authorizenet.x_test_request=FALSE
-+authorizenet.relay.response.url=http://broadleaf.ngrok.com/process
++authorizenet.relay.response.url=http://ultra.ngrok.com/process
 +authorizenet.confirm.url=http://localhost:8080/confirmation
 +authorizenet.error.url=http://localhost:8080/checkout
 \ No newline at end of file
@@ -155,11 +155,11 @@ index 107ecb8..b84b08d 100644
 --- a/site/src/main/webapp/WEB-INF/applicationContext-security.xml
 +++ b/site/src/main/webapp/WEB-INF/applicationContext-security.xml
 @@ -87,7 +87,13 @@
-                                           JOIN BLC_ROLE r ON cr.ROLE_ID = r.ROLE_ID 
+                                           JOIN UC_ROLE r ON cr.ROLE_ID = r.ROLE_ID 
                                            WHERE USER_NAME=?" />
      
--    <bean id="blCsrfFilter" class="org.broadleafcommerce.common.security.handler.CsrfFilter" />
-+    <bean id="blCsrfFilter" class="org.broadleafcommerce.common.security.handler.CsrfFilter">
+-    <bean id="ucCsrfFilter" class="com.ultracommerce.common.security.handler.CsrfFilter" />
++    <bean id="ucCsrfFilter" class="com.ultracommerce.common.security.handler.CsrfFilter">
 +        <property name="excludedRequestPatterns"> 
 +            <list> 
 +                <value>/process</value> 
@@ -168,7 +168,7 @@ index 107ecb8..b84b08d 100644
 +    </bean>
                                            
      <!-- Sets the login failure URL -->
-     <bean id="blAuthenticationFailureHandler" class="org.broadleafcommerce.common.security.BroadleafAuthenticationFailureHandler">
+     <bean id="ucAuthenticationFailureHandler" class="com.ultracommerce.common.security.UltraAuthenticationFailureHandler">
 diff --git a/site/src/main/webapp/WEB-INF/templates/checkout/checkout.html b/site/src/main/webapp/WEB-INF/templates/checkout/checkout.html
 index 560dd50..4429ff8 100644
 --- a/site/src/main/webapp/WEB-INF/templates/checkout/checkout.html
@@ -199,9 +199,9 @@ index 0000000..77c7cce
 @@ -0,0 +1,121 @@
 +<form th:action="${authorizenet_server_url}" method="post" id="billing_info" th:if="${validOrderInfo and validShipping}">
 +
-+    <input type="hidden" name="blc_cid" th:value="${blc_cid}" />
-+    <input type="hidden" name="blc_oid" th:value="${blc_oid}" />
-+    <input type="hidden" name="blc_tps" th:value="${blc_tps}" />
++    <input type="hidden" name="uc_cid" th:value="${uc_cid}" />
++    <input type="hidden" name="uc_oid" th:value="${uc_oid}" />
++    <input type="hidden" name="uc_tps" th:value="${uc_tps}" />
 +    <input type="hidden" name="x_invoice_num" th:value="${x_invoice_num}" />
 +    <input type="hidden" name="x_relay_url" th:value="${x_relay_url}" />
 +    <input type="hidden" name="x_login" th:value="${x_login}" />
@@ -242,7 +242,7 @@ index 0000000..77c7cce
 +
 +        <div class="form50 margin20">
 +            <label for="address2">Address 2</label>
-+            <input type="text" name="blc_address_line_2" class="field50 clearable" th:disabled="${!validShipping}" />
++            <input type="text" name="uc_address_line_2" class="field50 clearable" th:disabled="${!validShipping}" />
 +        </div>
 +
 +        <div class="clearfix"></div>
@@ -325,9 +325,9 @@ index e904cad..b86be3b 100644
 +++ b/site/src/main/webapp/WEB-INF/web.xml
 @@ -16,6 +16,7 @@
          <param-value>
-             classpath:/bl-open-admin-contentClient-applicationContext.xml
-             classpath:/bl-cms-contentClient-applicationContext.xml
-+            classpath:/bl-authorizenet-applicationContext.xml
+             classpath:/uc-open-admin-contentClient-applicationContext.xml
+             classpath:/uc-cms-contentClient-applicationContext.xml
++            classpath:/uc-authorizenet-applicationContext.xml
              classpath:/applicationContext.xml
              classpath:/applicationContext-email.xml
              /WEB-INF/applicationContext-datasource.xml

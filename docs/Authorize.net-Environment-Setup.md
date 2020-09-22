@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Users must establish their own test account with Authorize.net in order to use the BroadleafCommerce Authorize.net payment functionality. This can be done here: https://developer.authorize.net/testaccount
+- Users must establish their own test account with Authorize.net in order to use the UltraCommerce Authorize.net payment functionality. This can be done here: https://developer.authorize.net/testaccount
 
 ### Configure your Authorize.net Account*
 1. Login to your Authorize.net account (https://account.authorize.net/ or https://sandbox.authorize.net/) and navigate to your Account Settings.
@@ -18,8 +18,8 @@ https://developer.authorize.net/api/reference/features/acceptjs.html
 ```xml
 <!-- Authorize.net Dependencies -->
 <dependency>
-    <groupId>org.broadleafcommerce</groupId>
-    <artifactId>broadleaf-authorizenet</artifactId>
+    <groupId>com.ultracommerce</groupId>
+    <artifactId>ultra-authorizenet</artifactId>
     <version>2.5.x-GA</version>
     <type>jar</type>
     <scope>compile</scope>
@@ -30,18 +30,18 @@ Make sure to include the dependency in your CORE pom.xml as well:
 ```xml
 <!-- Authorize.net Dependencies -->
 <dependency>
-    <groupId>org.broadleafcommerce</groupId>
-    <artifactId>broadleaf-authorizenet</artifactId>
+    <groupId>com.ultracommerce</groupId>
+    <artifactId>ultra-authorizenet</artifactId>
 </dependency>
 ```
 
 > Note: If using the sample Heat Clinic, you'll want to remove the sample payment gateway dependency from your poms as well
 
-You should now begin to setup your environment to work with Broadleaf Commerce Authorize.net support. 
-The first step is to make Broadleaf Commerce aware of your Authorize.net account credentials. 
+You should now begin to setup your environment to work with Ultra Commerce Authorize.net support. 
+The first step is to make Ultra Commerce aware of your Authorize.net account credentials. 
 This is accomplished through environment configuration (see [[Runtime Environment Configuration]]).
 
-Broadleaf allows you to create your own property files per environment (e.g. common.properties, local.properties, development.properties, integrationdev.properties, integrationqa.properties, staging.properties, and production.properties) 
+Ultra allows you to create your own property files per environment (e.g. common.properties, local.properties, development.properties, integrationdev.properties, integrationqa.properties, staging.properties, and production.properties) 
 You will need to enter the following key/value pairs in the appropriate locations:
 
 ### common.properties

@@ -1,6 +1,6 @@
 # Authorize.net Apple Pay Quick Start
 
-Broadleaf Commerce offers an out-of-the-box Authorize.net solution that requires little configuration and is easily set up. 
+Ultra Commerce offers an out-of-the-box Authorize.net solution that requires little configuration and is easily set up. 
 The quick start solution implements the [Apple Pay](https://developer.authorize.net/api/reference/features/in-app.html#Apple_Pay) model offered by Authorize.net.
 This implementation should be useful for those with a simple checkout flow.
 
@@ -159,12 +159,12 @@ public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
 ```java
 @Controller
-public class AuthorizeNetCheckoutController extends BroadleafCheckoutController {
+public class AuthorizeNetCheckoutController extends UltraCheckoutController {
 
-    @Resource(name = "blAddressService")
+    @Resource(name = "ucAddressService")
     protected AddressService addressService;
 
-    @Resource(name = "blAuthorizeNetConfiguration")
+    @Resource(name = "ucAuthorizeNetConfiguration")
     protected AuthorizeNetConfiguration authorizeNetConfiguration;
 
     @RequestMapping(value = "/checkout/authnet/complete")

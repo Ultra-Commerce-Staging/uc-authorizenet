@@ -1,31 +1,31 @@
 /*
  * #%L
- * BroadleafCommerce Authorize.net
+ * UltraCommerce Authorize.net
  * %%
- * Copyright (C) 2009 - 2014 Broadleaf Commerce
+ * Copyright (C) 2009 - 2014 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-package org.broadleafcommerce.payment.service.gateway;
+package com.ultracommerce.payment.service.gateway;
 
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.AbstractPaymentGatewayTransparentRedirectService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayTransparentRedirectService;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.vendor.authorizenet.service.payment.AuthorizeNetCheckoutService;
-import org.broadleafcommerce.vendor.authorizenet.service.payment.AuthorizeNetGatewayType;
-import org.broadleafcommerce.vendor.authorizenet.service.payment.type.MessageConstants;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.payment.service.AbstractPaymentGatewayTransparentRedirectService;
+import com.ultracommerce.common.payment.service.PaymentGatewayTransparentRedirectService;
+import com.ultracommerce.common.vendor.service.exception.PaymentException;
+import com.ultracommerce.vendor.authorizenet.service.payment.AuthorizeNetCheckoutService;
+import com.ultracommerce.vendor.authorizenet.service.payment.AuthorizeNetGatewayType;
+import com.ultracommerce.vendor.authorizenet.service.payment.type.MessageConstants;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -41,13 +41,13 @@ import net.authorize.sim.Fingerprint;
  * @author Chad Harchar (charchar)
  */
 @Deprecated
-@Service("blAuthorizeNetTransparentRedirectService")
+@Service("ucAuthorizeNetTransparentRedirectService")
 public class AuthorizeNetTransparentRedirectServiceImpl extends AbstractPaymentGatewayTransparentRedirectService implements PaymentGatewayTransparentRedirectService {
 
-    @Resource(name = "blAuthorizeNetConfiguration")
+    @Resource(name = "ucAuthorizeNetConfiguration")
     protected AuthorizeNetConfiguration configuration;
 
-    @Resource(name="blAuthorizeNetCheckoutService")
+    @Resource(name="ucAuthorizeNetCheckoutService")
     protected AuthorizeNetCheckoutService authorizeNetCheckoutService;
     
     private static final String AUTH_ONLY = "AUTH_ONLY";
@@ -96,8 +96,8 @@ public class AuthorizeNetTransparentRedirectServiceImpl extends AbstractPaymentG
         .responseMap(AuthNetField.X_RELAY_RESPONSE.getFieldName(), "true")
         .responseMap(AuthNetField.X_CUST_ID.getFieldName(), custId)
         .responseMap(AuthNetField.X_TRANS_ID.getFieldName(), orderId)
-        .responseMap(MessageConstants.BLC_CID, custId)
-        .responseMap(MessageConstants.BLC_OID, orderId)
+        .responseMap(MessageConstants.UC_CID, custId)
+        .responseMap(MessageConstants.UC_OID, orderId)
         .responseMap(MessageConstants.AUTHORIZENET_SERVER_URL, serverUrl);
 
         if(requestDTO.billToPopulated()) {
@@ -118,7 +118,7 @@ public class AuthorizeNetTransparentRedirectServiceImpl extends AbstractPaymentG
         }
 
         try {
-            responseDTO.responseMap(MessageConstants.BLC_TPS, authorizeNetCheckoutService.createTamperProofSeal(custId, orderId));
+            responseDTO.responseMap(MessageConstants.UC_TPS, authorizeNetCheckoutService.createTamperProofSeal(custId, orderId));
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {

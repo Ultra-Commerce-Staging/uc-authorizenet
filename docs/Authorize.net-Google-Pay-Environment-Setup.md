@@ -4,7 +4,7 @@
 
 To work with Google Pay, we need to specify additional property [[Gateway Merchant ID | https://support.authorize.net/s/article/What-Is-My-Payment-Gateway-ID]].
 
-Broadleaf allows you to create your own property files per environment (e.g. common.properties, local.properties, development.properties, integrationdev.properties, integrationqa.properties, staging.properties, and production.properties) 
+Ultra allows you to create your own property files per environment (e.g. common.properties, local.properties, development.properties, integrationdev.properties, integrationqa.properties, staging.properties, and production.properties) 
 You will need to enter the following key/value pairs in the appropriate locations:
 
 ### common.properties

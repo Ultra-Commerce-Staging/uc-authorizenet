@@ -1,39 +1,39 @@
 /*
  * #%L
- * BroadleafCommerce Authorize.net
+ * UltraCommerce Authorize.net
  * %%
- * Copyright (C) 2009 - 2014 Broadleaf Commerce
+ * Copyright (C) 2009 - 2014 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.payment.service.gateway;
+package com.ultracommerce.payment.service.gateway;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentTransactionType;
-import org.broadleafcommerce.common.payment.PaymentType;
-import org.broadleafcommerce.common.payment.dto.AddressDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.AbstractPaymentGatewayTransactionService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.vendor.authorizenet.service.payment.AuthorizeNetGatewayType;
-import org.broadleafcommerce.vendor.authorizenet.service.payment.type.MessageConstants;
-import org.broadleafcommerce.vendor.authorizenet.util.AuthorizeNetUtil;
+import com.ultracommerce.common.money.Money;
+import com.ultracommerce.common.payment.PaymentTransactionType;
+import com.ultracommerce.common.payment.PaymentType;
+import com.ultracommerce.common.payment.dto.AddressDTO;
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.payment.service.AbstractPaymentGatewayTransactionService;
+import com.ultracommerce.common.payment.service.PaymentGatewayTransactionService;
+import com.ultracommerce.common.time.SystemTime;
+import com.ultracommerce.common.vendor.service.exception.PaymentException;
+import com.ultracommerce.vendor.authorizenet.service.payment.AuthorizeNetGatewayType;
+import com.ultracommerce.vendor.authorizenet.service.payment.type.MessageConstants;
+import com.ultracommerce.vendor.authorizenet.util.AuthorizeNetUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -72,12 +72,12 @@ import net.authorize.data.cim.PaymentTransaction;
 import net.authorize.data.creditcard.CreditCard;
 import net.authorize.util.XmlUtility;
 
-@Service("blAuthorizeNetTransactionService")
+@Service("ucAuthorizeNetTransactionService")
 public class AuthorizeNetTransactionServiceImpl extends AbstractPaymentGatewayTransactionService implements PaymentGatewayTransactionService {
 
     private static final Log LOG = LogFactory.getLog(AuthorizeNetTransactionServiceImpl.class);
 
-    @Resource(name = "blAuthorizeNetConfiguration")
+    @Resource(name = "ucAuthorizeNetConfiguration")
     protected AuthorizeNetConfiguration configuration;
 
     @Resource
@@ -181,8 +181,8 @@ public class AuthorizeNetTransactionServiceImpl extends AbstractPaymentGatewayTr
                 responseDTO.responseMap(AuthNetField.X_TEST_REQUEST.getFieldName(), configuration.getXTestRequest());
                 responseDTO.responseMap(AuthNetField.X_CUST_ID.getFieldName(), paymentRequestDTO.getCustomer().getCustomerId());
                 responseDTO.responseMap(AuthNetField.X_TRANS_ID.getFieldName(), response.getTransactionResponse().getTransId());
-                responseDTO.responseMap(MessageConstants.BLC_CID, paymentRequestDTO.getCustomer().getCustomerId());
-                responseDTO.responseMap(MessageConstants.BLC_OID, paymentRequestDTO.getOrderId());
+                responseDTO.responseMap(MessageConstants.UC_CID, paymentRequestDTO.getCustomer().getCustomerId());
+                responseDTO.responseMap(MessageConstants.UC_OID, paymentRequestDTO.getOrderId());
                 responseDTO.responseMap(MessageConstants.AUTHORIZENET_SERVER_URL, configuration.getServerUrl());
 
                 if(paymentRequestDTO.billToPopulated()) {
@@ -252,7 +252,7 @@ public class AuthorizeNetTransactionServiceImpl extends AbstractPaymentGatewayTr
             if (paymentRequestDTO.getAdditionalFields().containsKey("X_TRANS_ID")) {
                 Transaction transaction = merchant.createAIMTransaction(transactionType, new BigDecimal(paymentRequestDTO.getTransactionTotal()));
                 transaction.getRequestMap().put(AuthNetField.X_TEST_REQUEST.getFieldName(), configuration.getXTestRequest());            transaction.getRequestMap().put(AuthNetField.X_TEST_REQUEST.getFieldName(), configuration.getXTestRequest());
-                transaction.setMerchantDefinedField(MessageConstants.BLC_OID, paymentRequestDTO.getOrderId());
+                transaction.setMerchantDefinedField(MessageConstants.UC_OID, paymentRequestDTO.getOrderId());
                 for (Entry<String, Object> field : paymentRequestDTO.getAdditionalFields().entrySet()) {
                     if (field.getValue() != null) {
                         // do not send any fields that are null or the Auth net API flips out
@@ -292,7 +292,7 @@ public class AuthorizeNetTransactionServiceImpl extends AbstractPaymentGatewayTr
                 if (result.getTarget().getResponseField(ResponseField.AMOUNT) != null) {
                     responseDTO.amount(new Money(result.getTarget().getResponseField(ResponseField.AMOUNT)));
                 }
-                responseDTO.orderId(result.getTarget().getMerchantDefinedField(MessageConstants.BLC_OID));
+                responseDTO.orderId(result.getTarget().getMerchantDefinedField(MessageConstants.UC_OID));
                 responseDTO.responseMap(MessageConstants.TRANSACTION_TIME, SystemTime.asDate().toString());
                 responseDTO.responseMap(ResponseField.RESPONSE_CODE.getFieldName(), "" + result.getResponseCode().getCode());
                 responseDTO.responseMap(ResponseField.RESPONSE_REASON_CODE.getFieldName(), "" + result.getReasonResponseCode().getResponseReasonCode());
@@ -402,8 +402,8 @@ public class AuthorizeNetTransactionServiceImpl extends AbstractPaymentGatewayTr
                            .responseMap(AuthNetField.X_TEST_REQUEST.getFieldName(), configuration.getXTestRequest())
                            .responseMap(AuthNetField.X_CUST_ID.getFieldName(), paymentRequestDTO.getCustomer().getCustomerId())
                            .responseMap(AuthNetField.X_TRANS_ID.getFieldName(), response.getTransactionResponse().getTransId())
-                           .responseMap(MessageConstants.BLC_CID, paymentRequestDTO.getCustomer().getCustomerId())
-                           .responseMap(MessageConstants.BLC_OID, paymentRequestDTO.getOrderId())
+                           .responseMap(MessageConstants.UC_CID, paymentRequestDTO.getCustomer().getCustomerId())
+                           .responseMap(MessageConstants.UC_OID, paymentRequestDTO.getOrderId())
                            .responseMap(MessageConstants.AUTHORIZENET_SERVER_URL, configuration.getServerUrl());
 
                 if(paymentRequestDTO.billToPopulated()) {
@@ -467,7 +467,7 @@ public class AuthorizeNetTransactionServiceImpl extends AbstractPaymentGatewayTr
      *
      */
     protected void parseOutConsolidatedTokenField(PaymentRequestDTO paymentRequestDTO) {
-        // NOTE: in Broadleaf 4.0.5+ the "TOKEN" field is an enum in PaymentAdditionalFieldType.TOKEN. This string is hardcoded
+        // NOTE: in Ultra 4.0.5+ the "TOKEN" field is an enum in PaymentAdditionalFieldType.TOKEN. This string is hardcoded
         // manually to keep backwards compatibility
         String consolidatedToken = (String) paymentRequestDTO.getAdditionalFields().get("TOKEN");
         if (consolidatedToken != null) {

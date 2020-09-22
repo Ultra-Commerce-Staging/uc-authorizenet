@@ -1,6 +1,6 @@
 # Authorize.net Apple Pay Environment Setup
 
-Broadleaf uses Apple Pay JS framework to work with Apple Pay. You should have Apple Developer Program account.
+Ultra uses Apple Pay JS framework to work with Apple Pay. You should have Apple Developer Program account.
 
 **You must have completed the [[Authorize.net Environment Setup]] before continuing**
 
@@ -25,7 +25,7 @@ This will default to exporting a xxxx.p12 file to your desktop.
 
 10. Specify configuration properties to work with Apple Pay.
 
-Broadleaf allows you to create your own property files per environment (e.g. common.properties, local.properties, development.properties, integrationdev.properties, integrationqa.properties, staging.properties, and production.properties) 
+Ultra allows you to create your own property files per environment (e.g. common.properties, local.properties, development.properties, integrationdev.properties, integrationqa.properties, staging.properties, and production.properties) 
 You will need to enter the following key/value pairs in the appropriate locations:
 
 ### common.properties

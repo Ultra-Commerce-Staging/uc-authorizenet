@@ -1,35 +1,35 @@
 /*
  * #%L
- * BroadleafCommerce Authorize.net
+ * UltraCommerce Authorize.net
  * %%
- * Copyright (C) 2009 - 2014 Broadleaf Commerce
+ * Copyright (C) 2009 - 2014 Ultra Commerce
  * %%
- * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
- * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
- * unless the restrictions on use therein are violated and require payment to Broadleaf in which case
- * the Broadleaf End User License Agreement (EULA), Version 1.1
- * (the "Commercial License" located at http://license.broadleafcommerce.org/commercial_license-1.1.txt)
+ * Licensed under the Ultra Fair Use License Agreement, Version 1.0
+ * (the "Fair Use License" located  at http://license.ultracommerce.org/fair_use_license-1.0.txt)
+ * unless the restrictions on use therein are violated and require payment to Ultra in which case
+ * the Ultra End User License Agreement (EULA), Version 1.1
+ * (the "Commercial License" located at http://license.ultracommerce.org/commercial_license-1.1.txt)
  * shall apply.
  * 
  * Alternatively, the Commercial License may be replaced with a mutually agreed upon license (the "Custom License")
- * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
+ * between you and Ultra Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
 
-package org.broadleafcommerce.vendor.authorizenet.web.controller;
+package com.ultracommerce.vendor.authorizenet.web.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponsePrintService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.common.web.payment.controller.PaymentGatewayAbstractController;
-import org.broadleafcommerce.payment.service.gateway.AuthorizeNetConfiguration;
-import org.broadleafcommerce.vendor.authorizenet.service.payment.AuthorizeNetCheckoutService;
+import com.ultracommerce.common.payment.dto.PaymentRequestDTO;
+import com.ultracommerce.common.payment.dto.PaymentResponseDTO;
+import com.ultracommerce.common.payment.service.PaymentGatewayConfiguration;
+import com.ultracommerce.common.payment.service.PaymentGatewayTransactionService;
+import com.ultracommerce.common.payment.service.PaymentGatewayWebResponsePrintService;
+import com.ultracommerce.common.payment.service.PaymentGatewayWebResponseService;
+import com.ultracommerce.common.vendor.service.exception.PaymentException;
+import com.ultracommerce.common.web.payment.controller.PaymentGatewayAbstractController;
+import com.ultracommerce.payment.service.gateway.AuthorizeNetConfiguration;
+import com.ultracommerce.vendor.authorizenet.service.payment.AuthorizeNetCheckoutService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,26 +51,26 @@ import net.authorize.sim.Result;
  * @deprecated - Transparent Redirect is no longer used in favor of Accept.js integration
  */
 @Deprecated
-@Controller("blAuthorizeNetController")
-@RequestMapping("/" + BroadleafAuthorizeNetController.GATEWAY_CONTEXT_KEY)
-public class BroadleafAuthorizeNetController extends PaymentGatewayAbstractController {
+@Controller("ucAuthorizeNetController")
+@RequestMapping("/" + UltraAuthorizeNetController.GATEWAY_CONTEXT_KEY)
+public class UltraAuthorizeNetController extends PaymentGatewayAbstractController {
 
-    protected static final Log LOG = LogFactory.getLog(BroadleafAuthorizeNetController.class);
+    protected static final Log LOG = LogFactory.getLog(UltraAuthorizeNetController.class);
     protected static final String GATEWAY_CONTEXT_KEY = "authorizenet";
 
-    @Resource(name = "blAuthorizeNetWebResponseService")
+    @Resource(name = "ucAuthorizeNetWebResponseService")
     protected PaymentGatewayWebResponseService paymentGatewayWebResponseService;
 
-    @Resource(name = "blAuthorizeNetCheckoutService")
+    @Resource(name = "ucAuthorizeNetCheckoutService")
     protected AuthorizeNetCheckoutService authorizeNetCheckoutService;
 
-    @Resource(name = "blAuthorizeNetConfiguration")
+    @Resource(name = "ucAuthorizeNetConfiguration")
     protected AuthorizeNetConfiguration configuration;
 
-    @Resource(name = "blPaymentGatewayWebResponsePrintService")
+    @Resource(name = "ucPaymentGatewayWebResponsePrintService")
     protected PaymentGatewayWebResponsePrintService webResponsePrintService;
     
-    @Resource(name = "blAuthorizeNetTransactionService")
+    @Resource(name = "ucAuthorizeNetTransactionService")
     protected PaymentGatewayTransactionService transactionService;
 
     @Override
@@ -150,7 +150,7 @@ public class BroadleafAuthorizeNetController extends PaymentGatewayAbstractContr
         boolean error = false;
         String returnUrl = "";
         try {
-            // Process the payment on the Broadleaf order side
+            // Process the payment on the Ultra order side
             returnUrl = super.process(model, request, redirectAttributes);
         } catch (Exception e) {
             error = true;

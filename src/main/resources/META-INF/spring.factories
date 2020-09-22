@@ -1,1 +1,1 @@
-org.broadleafcommerce.common.module.BroadleafModuleRegistration=org.broadleafcommerce.vendor.authorizenet.config.AuthorizeNetModuleRegistration
+com.ultracommerce.common.module.UltraModuleRegistration=com.ultracommerce.vendor.authorizenet.config.AuthorizeNetModuleRegistration
